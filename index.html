@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nitesh Pandey - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Updated Font Awesome CDN for broader icon support -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("AE1PafMf3jx1YGttq"); // Initialize EmailJS with your User ID
+        })();
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1C1C2C; /* Dark Blue-Gray background */
+            color: #E8E8E8; /* Light Gray text color */
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 2px;
+            background-color: #FFD700; /* Gold accent */
+        }
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            transition: transform 0.3s ease-in-out;
+            color: #FFD700; /* Gold on hover */
+        }
+        .project-card, .info-card {
+            background-color: #28283D; /* Slightly lighter dark blue-gray card background */
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .project-card:hover, .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.3), 0 6px 15px -5px rgba(0, 0, 0, 0.15);
+        }
+        .contact-input {
+            background-color: #3A3A50; /* Input background */
+            border: 1px solid #4A4A60;
+            color: #E8E8E8;
+            border-radius: 0.375rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+        }
+        .contact-input:focus {
+            outline: none;
+            border-color: #FFD700; /* Gold on focus */
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5);
+        }
+        .submit-button {
+            background-color: #FFD700; /* Gold button */
+            color: #1C1C2C; /* Dark text on gold button */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .submit-button:hover {
+            background-color: #DAA520; /* Darker gold on hover */
+            transform: translateY(-2px);
+        }
+        .profile-image-container {
+            border-radius: 9999px; /* Make it circular */
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); /* Gold shadow */
+        }
+        .placeholder-image {
+            background-color: #4A4A60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #B0B0B0;
+            font-size: 1.5rem;
+        }
+        /* Smooth scrolling for navigation links */
+        html {
+            scroll-behavior: smooth;
+        }
+        .animate-pulse-new {
+            animation: pulse-new 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          
+
+        }
+        @keyframes pulse-new {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        /* Navbar hover effect */
+        .navbar-link:hover {
+            color: #FFD700; /* Gold on hover */
+            transform: scale(1.05);
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between icon and text */
+        }
+        .skill-logo {
+            width: 24px; /* Size for the logo images */
+            height: 24px;
+            object-fit: contain; /* Ensure the image fits within the bounds */
+            filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.3)); /* Subtle glow */
+        }
+        .status-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .status-message.success {
+            background-color: #28a745; /* Green for success */
+            color: white;
+        }
+        .status-message.error {
+            background-color: #dc3545; /* Red for error */
+            color: white;
+        }
+        .download-button {
+            background-color: #FFD700; /* Gold button */
+            color: #1C1C2C; /* Dark text on gold button */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .download-button:hover {
+            background-color: #DAA520; /* Darker gold on hover */
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navbar -->
+    <nav class="bg-gray-900 p-4 fixed w-full z-10 top-0 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#hero" class="text-white text-2xl font-bold navbar-link">Portfolio</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-300 hover:text-white transition duration-300 navbar-link">About</a>
+                <a href="#skills" class="text-gray-300 hover:text-white transition duration-300 navbar-link">Skills</a>
+                <a href="#projects" class="text-gray-300 hover:text-white transition duration-300 navbar-link">Projects</a>
+                <a href="#certifications" class="text-gray-300 hover:text-white transition duration-300 navbar-link">Certifications</a>
+                <a href="#contact" class="text-gray-300 hover:text-white transition duration-300 navbar-link">Contact</a>
+                <a href="#download-cv" class="text-gray-300 hover:text-white transition duration-300 navbar-link">Download CV</a>
+            </div>
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-800 mt-2 rounded-md shadow-lg">
+            <a href="#about" class="block py-2 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">About</a>
+            <a href="#skills" class="block py-2 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">Skills</a>
+            <a href="#projects" class="block py-2 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">Projects</a>
+            <a href="#certifications" class="block py-2 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">Certifications</a>
+            <a href="#contact" class="block py-2 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">Contact</a>
+            <a href="#download-cv" class="block py-2 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">Download CV</a>
+        </div>
+    </nav>
+
+    <div class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8 mt-16">
+
+        <!-- Hero Section -->
+        <section id="hero" class="text-center mb-20 pt-16">
+            <div class="w-48 h-48 rounded-full overflow-hidden mx-auto mb-6 bg-gray-700 flex items-center justify-center profile-image-container">
+                <!-- Your actual photo URL - Assuming image1.jpg is in an 'images' folder -->
+                <img src="images/image2.jpg" alt="Nitesh Pandey" class="w-full h-full object-cover">
+            </div>
+            <h1 class="text-5xl sm:text-6xl font-bold mb-4">Hi, I'm Nitesh Pandey</h1>
+            <p class="text-lg text-gray-300 max-w-xl mx-auto">
+                Passionate about building responsive web applications and data-driven dashboards.
+              </p>
+            <p class="text-2xl sm:text-3xl font-semibold text-yellow-400 animate-pulse-new" id="role-text">Frontend Developer</p>
+            
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="max-w-4xl w-full mb-20 p-8 rounded-lg shadow-lg bg-gray-900 flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/3">
+                <!-- Placeholder for About section image -->
+                <img src="images/image1.jpg" alt="About Nitesh" class="w-full h-auto rounded-lg shadow-md">
+            </div>
+            <div class="md:w-2/3">
+                <h2 class="text-4xl font-bold mb-8 section-title">About Me</h2>
+                <p class="text-lg leading-relaxed">
+                    I am a passionate software professional seeking dynamic opportunities where I can leverage my expertise in both **Frontend Development** and **Data Analysis**. My goal is to contribute to impactful projects and continuously grow my skills.
+                </p>
+                <p class="text-lg leading-relaxed mt-4">
+                    As a **Frontend Developer**, I am proficient in building engaging user interfaces using **HTML, CSS, JavaScript, and React.js**. I focus on creating responsive and intuitive web experiences.
+                </p>
+                <p class="text-lg leading-relaxed mt-4">
+                    In **Data Analysis**, I excel at uncovering insights from complex datasets. My toolkit includes **Python (Pandas, NumPy, Matplotlib, Seaborn)** for data manipulation and visualization, and **Power BI** for business intelligence. I'm skilled in exploratory data analysis and predictive modeling to drive data-driven decisions.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="max-w-4xl w-full mb-20 p-8 rounded-lg shadow-lg bg-gray-900">
+            <h2 class="text-4xl font-bold mb-8 section-title">Skills</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+                        <i class="fas fa-code"></i> Programming Languages
+                    </h3>
+                    <ul class="list-disc list-inside text-lg">
+                        <li class="skill-item"><img src="images/python.png" onerror="this.src='https://placehold.co/24x24/3673A5/FFFFFF?text=PY'" alt="Python Logo" class="skill-logo"> Python</li>
+                        <li class="skill-item"><img src="images/c_lang.png" onerror="this.src='https://placehold.co/24x24/5D6D7E/FFFFFF?text=C'" alt="C Logo" class="skill-logo"> C</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+                        <i class="fas fa-database"></i> Database Management
+                    </h3>
+                    <ul class="list-disc list-inside text-lg">
+                        <li class="skill-item"><img src="images/mysql.png" onerror="this.src='https://placehold.co/24x24/00758F/FFFFFF?text=SQL'" alt="MySQL Logo" class="skill-logo"> MySQL</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+                        <i class="fas fa-chart-bar"></i> Data Analysis & Visualization
+                    </h3>
+                    <ul class="list-disc list-inside text-lg">
+                        <li class="skill-item"><img src="images/pandas.png" onerror="this.src='https://placehold.co/24x24/1565C0/FFFFFF?text=PD'" alt="Pandas Logo" class="skill-logo"> Pandas</li>
+                        <li class="skill-item"><img src="images/numpy.png" onerror="this.src='https://placehold.co/24x24/4CAF50/FFFFFF?text=NP'" alt="NumPy Logo" class="skill-logo"> NumPy</li>
+                        <li class="skill-item"><img src="images/matplotlib.png" onerror="this.src='https://placehold.co/24x24/E91E63/FFFFFF?text=ML'" alt="Matplotlib Logo" class="skill-logo"> Matplotlib</li>
+                        <li class="skill-item"><img src="images/seaborn.png" onerror="this.src='https://placehold.co/24x24/00BCD4/FFFFFF?text=SB'" alt="Seaborn Logo" class="skill-logo"> Seaborn</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+                        <i class="fas fa-chart-pie"></i> Business Intelligence
+                    </h3>
+                    <ul class="list-disc list-inside text-lg">
+                        <li class="skill-item"><img src="images/powerbi.png" onerror="this.src='https://placehold.co/24x24/F44336/FFFFFF?text=PB'" alt="Power BI Logo" class="skill-logo"> Power BI</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+                        <i class="fas fa-tools"></i> Developer Tools
+                    </h3>
+                    <ul class="list-disc list-inside text-lg">
+                        <li class="skill-item"><img src="images/vscode.png" onerror="this.src='https://placehold.co/24x24/007ACC/FFFFFF?text=VS'" alt="VS Code Logo" class="skill-logo"> VS Code</li>
+                        <li class="skill-item"><img src="images/pycharm.png" onerror="this.src='https://placehold.co/24x24/000000/FFFFFF?text=PC'" alt="PyCharm Logo" class="skill-logo"> PyCharm</li>
+                        <li class="skill-item"><img src="images/jupyter.png" onerror="this.src='https://placehold.co/24x24/F37726/FFFFFF?text=JN'" alt="Jupyter Notebook Logo" class="skill-logo"> Jupyter Notebook</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+                        <i class="fas fa-globe"></i> Web Development
+                    </h3>
+                    <ul class="list-disc list-inside text-lg">
+                        <li class="skill-item"><img src="images/html.png" onerror="this.src='https://placehold.co/24x24/E44D26/FFFFFF?text=HT'" alt="HTML Logo" class="skill-logo"> HTML</li>
+                        <li class="skill-item"><img src="images/css.png" onerror="this.src='https://placehold.co/24x24/264DE4/FFFFFF?text=CS'" alt="CSS Logo" class="skill-logo"> CSS</li>
+                        <li class="skill-item"><img src="images/javascript.png" onerror="this.src='https://placehold.co/24x24/F7DF1E/000000?text=JS'" alt="JavaScript Logo" class="skill-logo"> JavaScript</li>
+                        <li class="skill-item"><img src="images/react.png" onerror="this.src='https://placehold.co/24x24/61DAFB/000000?text=RC'" alt="React.js Logo" class="skill-logo"> React.js</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+                        <i class="fas fa-laptop"></i> Operating Systems
+                    </h3>
+                    <ul class="list-disc list-inside text-lg">
+                        <li class="skill-item"><img src="images/windows.png" onerror="this.src='https://placehold.co/24x24/0078D4/FFFFFF?text=WIN'" alt="Windows OS Logo" class="skill-logo"> Windows OS</li>
+                        <li class="skill-item"><img src="images/macos.png" onerror="this.src='https://placehold.co/24x24/A2AAAD/000000?text=MAC'" alt="Mac OS Logo" class="skill-logo"> Mac OS</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="max-w-4xl w-full mb-20 p-8 rounded-lg shadow-lg bg-gray-900">
+            <h2 class="text-4xl font-bold mb-8 section-title">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1: RESCUE READY -->
+                <div class="project-card p-6">
+                    <img src="images/image3.jpg" alt="RESCUE READY Project" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">RESCUE READY</h3>
+                    <p class="text-md text-gray-400 mb-2">Technology: Python, MySQL</p>
+                    <p class="text-md text-gray-400 mb-4">July 2024 - August 2024</p>
+                    <ul class="list-disc list-inside text-lg">
+                        <li>Emergency Alerts: Sends real-time location via SMS and notifies nearby users for quick assistance.</li>
+                        <li>Safety Features: Activates camera recording and a continuous buzzer during emergencies.</li>
+                        <li>Community Support: Encourages collaboration by alerting nearby Rescue Ready users.</li>
+                        <li>Data Security: Ensures encrypted handling of personal and location data.</li>
+                    </ul>
+                </div>
+
+                <!-- Project 2: Heart Disease Prediction using EDA -->
+                <div class="project-card p-6">
+                    <img src="images/human heart.jpg" alt="Heart Disease Prediction Project" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Heart Disease Prediction using EDA</h3>
+                    <p class="text-md text-gray-400 mb-2">Technology: Python (Pandas, NumPy, Matplotlib, Seaborn)</p>
+                    <p class="text-md text-gray-400 mb-4">Duration: 1 Month</p>
+                    <p class="text-lg leading-relaxed">
+                        Conducted an EDA project analyzing health indicators and visualizing patterns to identify risk factors for heart disease. Enhanced predictive modeling and gained insights into heart disease trends.
+                    </p>
+                </div>
+
+                <!-- Project 3: Homely Vision - Customized Home Design Solutions -->
+                <div class="project-card p-6">
+                    <img src="images/homely.jpg" alt="Homely Vision Project" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Homely Vision - Customized Home Design Solutions</h3>
+                    <p class="text-md text-gray-400 mb-2">Technology: HTML, CSS, JavaScript</p>
+                    <p class="text-md text-gray-400 mb-4">Duration: 2 Months</p>
+                    <p class="text-lg leading-relaxed">
+                        Developed a platform that generates customized home designs based on land area input. Provided architectural plans, room layouts, and pricing tailored to user specifications.
+                    </p>
+                </div>
+
+                <!-- Project 4: Online Banking System in C -->
+                <div class="project-card p-6">
+                    <img src="images/online banking.jpg" alt="Online Banking System Project" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Online Banking System in C</h3>
+                    <p class="text-md text-gray-400 mb-2">Technology: C Programming</p>
+                    <p class="text-md text-gray-400 mb-4">Duration: 2 Months</p>
+                    <p class="text-lg leading-relaxed">
+                        Designed and implemented a basic online banking system. Features include user registration, login, account management, balance inquiries, deposits, and transaction handling.
+                    </p>
+                </div>
+
+                <!-- Project 5: Customer Churn Prediction using EDA -->
+                <div class="project-card p-6">
+                    <img src="images/customer .jpg" alt="Customer Churn Prediction Project" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Customer Churn Prediction using EDA</h3>
+                    <p class="text-md text-gray-400 mb-2">Technology: Python, Data Visualization, Scikit-learn</p>
+                    <p class="text-lg leading-relaxed">
+                        Developed a model to predict customer churn for a subscription-based service, helping businesses retain customers effectively. Analyzed customer behavior data using Python to identify patterns leading to churn. Performed feature engineering, correlation analysis, and EDA to find key influencing factors.
+                    </p>
+                </div>
+
+                <!-- Project 6: Diwali Sales Analysis using EDA -->
+                <div class="project-card p-6">
+                    <img src="images/diwali.jpg" alt="Diwali Sales Analysis Project" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Diwali Sales Analysis using EDA</h3>
+                    <p class="text-md text-gray-400 mb-2">Technology: Python, Pandas, NumPy, Matplotlib, Seaborn, YData Profiling</p>
+                    <p class="text-lg leading-relaxed">
+                        This project analyzes Diwali sales data using Python to uncover customer buying behavior and trends. It involves data cleaning, visualization, and profiling to provide insights into key factors like gender, age group, and product categories influencing sales.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications & Workshops Section -->
+        <section id="certifications" class="max-w-4xl w-full mb-20 p-8 rounded-lg shadow-lg bg-gray-900">
+            <h2 class="text-4xl font-bold mb-8 section-title">Certifications & Workshops</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="info-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Data Science with Machine Learning</h3>
+                    <p class="text-lg text-gray-400">Sofcon Scortek Pvt. Ltd., Uttar Pradesh</p>
+                </div>
+                <div class="info-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Machine Learning and Its Application Workshop</h3>
+                    <p class="text-lg text-gray-400">By Dr. Dheeraj D at Buddha Institute of Technology</p>
+                    <p class="text-md text-gray-500">March 13-15, 2024</p>
+                </div>
+                <div class="info-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3 text-yellow-400">Data Science Workshop</h3>
+                    <p class="text-lg text-gray-400">With ShapeMySkills at Buddha Institute of Technology</p>
+                    <p class="text-md text-gray-500">December 3-4, 2022</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download CV Section -->
+        <section id="download-cv" class="max-w-4xl w-full mb-20 p-8 rounded-lg shadow-lg bg-gray-900 text-center">
+            <h2 class="text-4xl font-bold mb-8 section-title">Download My CV</h2>
+            <p class="text-lg mb-6">You can download my latest curriculum vitae to learn more about my experience and skills.</p>
+            <!-- Updated href to link to the uploaded CV file -->
+            <a href=" documents/NITESH PANDEY.CV.pdf" download="NITESH PANDEY.CV.pdf" class="download-button">
+                <i class="fas fa-download"></i> Download CV
+            </a>
+        </section>
+
+        <!-- Get in Touch Section -->
+        <section id="contact" class="max-w-4xl w-full mb-20 p-8 rounded-lg shadow-lg bg-gray-900">
+            <h2 class="text-4xl font-bold mb-8 section-title">Get in Touch</h2>
+            <p class="text-lg mb-6">Have a question or want to collaborate? Feel free to send me a message!</p>
+            <form id="contactForm" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-lg font-medium mb-2">Name</label>
+                    <input type="text" id="name" name="from_name" class="contact-input" placeholder="Your Name" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-lg font-medium mb-2">Email</label>
+                    <input type="email" id="email" name="from_email" class="contact-input" placeholder="Your Email" required>
+                </div>
+                <div>
+                    <label for="message" class="block text-lg font-medium mb-2">Message</label>
+                    <textarea id="message" name="message" rows="6" class="contact-input" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="submit-button" id="submitButton">Send Message</button>
+                <div id="statusMessage" class="status-message hidden"></div>
+            </form>
+
+            <div class="mt-12 space-y-6 text-center">
+                <h3 class="text-3xl font-bold text-yellow-400">Direct Contact Information</h3>
+                <p class="text-xl flex items-center justify-center gap-3">
+                    <i class="fas fa-phone-alt text-yellow-400"></i> Phone: +91-8887629955
+                </p>
+                <p class="text-xl flex items-center justify-center gap-3">
+                    <i class="fas fa-envelope text-yellow-400"></i> Email: pandeynitesh762@gmail.com
+                </p>
+                <p class="text-xl flex items-center justify-center gap-3">
+                    <i class="fas fa-map-marker-alt text-yellow-400"></i> Address: Gorakhpur, Uttar Pradesh
+                </p>
+                <p class="text-xl flex items-center justify-center gap-3">
+                    <a href="https://wa.me/918887629955" target="_blank" class="text-xl text-yellow-400 hover:text-yellow-500 transition duration-300 flex items-center gap-3">
+                        <i class="fab fa-whatsapp text-yellow-400"></i> WhatsApp: +91-8887629955
+                    </a>
+                </p>
+            </div>
+        </section>
+
+        <!-- Social Media Links -->
+        <section id="social-media" class="max-w-4xl w-full p-8 rounded-lg shadow-lg bg-gray-900 text-center">
+            <h2 class="text-4xl font-bold mb-8 section-title">Connect with Me</h2>
+            <div class="flex justify-center space-x-8">
+                <a href="https://github.com/niteshpandey007" target="_blank" class="social-icon text-yellow-400 text-5xl">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/niteshpandey007" target="_blank" class="social-icon text-yellow-400 text-5xl">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://instagram.com/___mr.nitesh" target="_blank" class="social-icon text-yellow-400 text-5xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/niteshpandey07" target="_blank" class="social-icon text-yellow-400 text-5xl">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://twitter.com/NiteshPandey07" target="_blank" class="social-icon text-yellow-400 text-5xl">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer with Copyright -->
+    <footer class="bg-gray-900 p-6 text-center text-gray-400 text-sm">
+        <p>&copy; <span id="current-year"></span> Nitesh Pandey. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript for typing effect for roles
+        const roles = ["Frontend Developer", "Data Analyst","Power Bi Developer"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const roleTextElement = document.getElementById('role-text');
+
+        function typeRole() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                roleTextElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                roleTextElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                setTimeout(() => isDeleting = true, 2000); // Pause before deleting
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+            }
+
+            const typingSpeed = isDeleting ? 70 : 150;
+            setTimeout(typeRole, typingSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            typeRole();
+            // Set current year for copyright
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+
+        // JavaScript for mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // JavaScript for Contact Form Submission using EmailJS
+        const contactForm = document.getElementById('contactForm');
+        const submitButton = document.getElementById('submitButton');
+        const statusMessage = document.getElementById('statusMessage');
+
+        contactForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            statusMessage.classList.remove('hidden', 'success', 'error');
+            statusMessage.textContent = 'Sending message...';
+
+            // EmailJS parameters
+            const serviceID = 'service_g65jc1g';
+            const templateID = 'template_sqspcjs';
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                message: document.getElementById('message').value,
+                to_name: 'Nitesh Pandey' // Your name, as the recipient
+            };
+
+            try {
+                await emailjs.send(serviceID, templateID, templateParams);
+                statusMessage.textContent = 'Message sent successfully!';
+                statusMessage.classList.add('success');
+                contactForm.reset(); // Clear the form on success
+            } catch (error) {
+                console.error('EmailJS Error:', error);
+                statusMessage.textContent = 'Failed to send message. Please try again later.';
+                statusMessage.classList.add('error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+                // Hide status message after 5 seconds
+                setTimeout(() => {
+                    statusMessage.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
